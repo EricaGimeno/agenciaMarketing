@@ -1,14 +1,13 @@
-/*Ventas: control de tipo de ventas ( landing page, web coorporatica, icommerce) , registrara datos del cliente(nombre ,apellido,cbu, celular,mail): se necesita que el sistema responda monto total de las ventas mensuales  , se mostrara el detalle de las ventas efectuadas y de las no concretadas un mensaje de alerta detallando porque no se concreto*/
+/*Ventas: control de tipo de ventas ( landing page, web coorporatica, icommerce) , registrara datos del cliente(nombre ,apellido): se necesita que el sistema responda monto total de las ventas mensuales  , se mostrara el detalle de las ventas efectuadas
 
 
+*/
 
-function contacto(apellido,nombre,cbu,mail,celular,detalle) {
-    var apellido=prompt("ingrese apellido").toUpperCase();
-    var nombre=prompt("ingrese nombre").toUpperCase();
-    var cbu=prompt("ingrese cvu").toUpperCase();
-    var mail=prompt("ingrese mail")
-    var celular=prompt("ingrese celular");
-    var detalle=prompt("detalle nombre del proyecto");
+
+function contacto() {
+    let apellido=prompt("ingrese apellido").toUpperCase();
+    let nombre=prompt("ingrese nombre").toUpperCase();
+    
     alert("nuevo proyecto del cliente: apellido: "+apellido+ " nombre: "+nombre);
     
     
@@ -17,7 +16,7 @@ function contacto(apellido,nombre,cbu,mail,celular,detalle) {
 
 function servicio() {
 
-    let servicios=parseInt(prompt("Escriba el numero de la opcion seleccionada: 1 landingPage, 2 Cooportiva, 3 Icomercce "));
+    let servicios=parseInt(prompt("Escriba el numero de la opcion seleccionada: 1 landingPage, 2 Cooportiva, 3 Ecomercce "));
     if(servicios==1){
         alert("Usted eligio una Landing  Page");
         return "LandingPage";
@@ -31,33 +30,38 @@ function servicio() {
 
     }
     else if(servicios==3){
-        alert("Usted eligio una Icomerce");
-        return "Icomerce";
+        alert("Usted eligio una Ecomercce");
+        return "Ecomercce";
     }
  }
 
  function presupuesto(itemsServicio){
+    let montoLp=0;
     if(itemsServicio==="LandingPage"){
-        var montoLp=parseFloat(prompt("ingrese el valor de la landing page"));
+        montoLp=parseFloat(prompt("ingrese el valor de la landing page"));
         montoLpage=montoLp+montoLpage;
-        alert("EL monto de Landing  Page es : "+ montoLp);
+        alert("EL monto de Landing  Page es $: "+ montoLp+" total de su compra $: "+montoLpage);
         return montoLpage;
 
     }
     
     else 
+        
         if (itemsServicio==="Coorporativa") {
-        var montoC=parseFloat(prompt("ingrese el valor de la WEb cooporativa"));
-        montoCooporativa=montoC+montoCooporativa;
-        alert("EL monto de la Web Cooportiva es: " + montoC);
-        return montoCooporativa;
+            let montoC=0;
+            montoC=parseFloat(prompt("ingrese el valor de la WEb cooporativa"));
+            montoCooporativa=montoC+montoCooporativa;
+            alert("EL monto de la Web Cooportiva es $: " +montoC+" total de su compra $: "+montoCooporativa );
+            return montoCooporativa;
         
     }
         else 
-            if(itemsServicio==="Icomerce"){
-                var montoI=parseFloat(prompt("ingrese el valor de la Icomercce"));
-                alert("EL monto de la Web Cooportiva es: " + montoI);
-                return montoIcomerce;
+            if(itemsServicio==="Ecomercce"){
+                let montoE=0;
+                montoE=parseFloat(prompt("ingrese el valor de la Ecomercce"));
+                montoEcomercce=montoE+montoEcomercce;
+                alert("EL monto de la Web Ecomercce es $: " +montoE+ " total de su compra $: " + montoEcomercce);
+                return montoEcomercce;
                 
 
         }
@@ -66,68 +70,50 @@ function servicio() {
 } 
     
 function contar(){
-    let ventas=ventas+1;
-    return ventas;
+    
+    cantidadVentas++
+    return cantidadVentas;
 }
 
 /*AQUI COMIENZA A EJECUTARSE EL PROGRAMA*/
 
-alert("Control de ventas WEB");
- 
-var cuento=0;/*para conatar las ventas totales de web en 30 dias*/
-var montoLpage=0;/*para sumar ventas totales del mes de landing page*/
-var montoCooporativa=0;/*para sumar ventas totales del mes de cooporativa*/
-var montoIcomerce=0;/*para sumar ventas totales del mes de icomerce*/
-var totalCliente=0;/*para sumar ventas totales de web compradas por un cliente, controlo que al infgresar un cliente necesite 2 landing page+ 1 cooporativa por ejemplo */
-var itemsServicio="";/*variable que guaradara, landig page, cooporativa, icomerce*/
-
-var apellido="";
-var nombre="";
-var cbu="";
-var mail="";
-var celular="";
-var detalle="";
-var ventasMensuales=0;/*sumara la cantidad total de ventas mensuales por ejemplo me dira vendio 100 web*/
-for(let i=1;i<=2;i++){
+    alert("Control de ventas WEB");
     
+    
+    var montoLpage=0;
+    var montoCooporativa=0;/*para sumar ventas totales del mes de cooporativa*/
+    var montoEcomercce=0;/*para sumar ventas totales del mes de icomerce*/
+    /*cantidad de ventas por un cliente, controlo que al infgresar un cliente necesite 2 landing page+ 1 cooporativa por ejemplo */
+    var cantidadVentas=0;/*cantidad de ventas totales en el mes*/
+    var totalVentas=0;
+    
+    for(let i=1;i<=2;i++){
+        
 
-    var venta=prompt("Desea ingresar un nuevo cliente ?,si o no")
-    if (venta=="si"){
-        contacto(apellido,nombre,cbu,mail,celular,detalle);
+        let venta=prompt("Desea ingresar un nuevo cliente ?,si o no");
+        if (venta=="si"){
+            contacto();
+        }
+        let totalCliente=0;
+        while(venta==="si"){
+            cantidadVentas=contar();
+            let itemsServicio="";
+            itemsServicio=servicio();
+            totalCliente=parseFloat(presupuesto(itemsServicio));
+            
+            totalVentas=montoLpage+montoCooporativa+montoEcomercce;
+           
+            venta=prompt("Desea ingresar una nueva venta ?,si o no");
+            
+            
+        }
+
+        alert("total a pagar $: " +totalCliente);
+
     }
-
-    while(venta==="si"){
-        
-        itemsServicio=servicio();
-
-       
-        /*no me esta funcionando esta sumatoria de presupuesto por cliente*/
-         totalCliente=totalCliente+parseFloat((presupuesto(itemsServicio)));
-
-        
-        
-        
-
-        venta=prompt("Desea ingresar una nueva venta ?,si o no")
-        
-        /*estas lineas no me funcionan, quiero contar ventas totales en el mes, 100 web vendidass por ejemplo */
-        /*ventasMensuales=parseInt(contar());*/
-        
-        
-        
-
-        
-
-
-        
-    }
-
-    alert("usted vendio en total $: "+ totalCliente+" $"+ "del cliente: "+apellido);
-
-}
-/*quiero informar esto al finalizar el mes*/
-alert("usted vendio en total $: ", montoLpage+montoCooporativa+montoIcomerce);
-alert("Vendio en el mes: " +ventasMensuales + " webs")
+    /*quiero informar esto al finalizar el mes*/
+    alert("venta total del mes $: " + totalVentas);
+    alert("cantidadad de web vendidas: " + cantidadVentas + " webs")
 
 
         
